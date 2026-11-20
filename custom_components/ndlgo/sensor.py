@@ -47,6 +47,21 @@ class NdlgoSensor(_Base):
     def __init__(self, coordinator, entry, key, attr, unit, device_class):
         super().__init__(coordinator, entry, key)
         self._attrv = attr
+        self._with_bills = key == "last_bill_volume"
+        # keep the bill list out of the recorder database
+        self._unrecorded_attributes = frozenset({"bills"})
+
+    @property
+    def extra_state_attributes(self):
+        attrs = super().extra_state_attributes
+        if attrs and self._with_bills:
+            attrs["bills"] = [
+                {"start": p.start.date().isoformat(), "end": p.end.date().isoformat(),
+                 "days": (p.end - p.start).days, "m3": p.m3, "eur": p.eur,
+                 "litres_per_day": round(p.m3 / (p.end - p.start).days * 1000) if (p.end - p.start).days else None}
+                for p in reversed(self.coordinator.data.periods)
+            ]
+        return attrs
         self._attr_native_unit_of_measurement = unit
         self._attr_device_class = device_class
 

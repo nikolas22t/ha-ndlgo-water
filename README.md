@@ -19,7 +19,7 @@ Manual: copy `custom_components/ndlgo` into your `config/custom_components/`.
 - Statistics `ndlgo:water_consumption` (m³) and `ndlgo:water_cost` (EUR), refreshed every 12 h.
   Meters without AMR only have bi-monthly bills, so each bill is spread evenly over its hours.
   Add `ndlgo:water_consumption` under Energy → Water consumption.
-- Sensors: last bill volume, last bill cost, last bill daily average (L/day), with period attributes.
+- Sensors: last bill volume, last bill cost, last bill daily average (L/day), with period attributes. *Last bill volume* also carries a `bills` attribute with every bill (start, end, days, m3, eur, litres_per_day), newest first, for history tables.
 - **Smart meters (AMR)**: if your installation has an AMR meter, its readings are fetched from the
   portal's `wbbamrperiods` endpoint and imported as `ndlgo:water_amr_consumption` (hourly m³), plus a
   *Smart meter reading* sensor. Without AMR these stay unavailable. The AMR response format isn't
