@@ -20,6 +20,11 @@ Manual: copy `custom_components/ndlgo` into your `config/custom_components/`.
   Meters without AMR only have bi-monthly bills, so each bill is spread evenly over its hours.
   Add `ndlgo:water_consumption` under Energy → Water consumption.
 - Sensors: last bill volume, last bill cost, last bill daily average (L/day), with period attributes.
+- **Smart meters (AMR)**: if your installation has an AMR meter, its readings are fetched from the
+  portal's `wbbamrperiods` endpoint and imported as `ndlgo:water_amr_consumption` (hourly m³), plus a
+  *Smart meter reading* sensor. Without AMR these stay unavailable. The AMR response format isn't
+  documented yet, so parsing is best-effort; if readings don't show up, enable debug logging for
+  `custom_components.ndlgo` and open an issue with the logged sample.
 
 ## Standalone script (optional)
 `ndlgo_import.py` does the same import from outside HA over the websocket API and also builds a

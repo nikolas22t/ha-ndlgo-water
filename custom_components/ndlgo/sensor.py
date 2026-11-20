@@ -15,6 +15,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
         NdlgoSensor(c, entry, "last_bill_volume", "m3", UnitOfVolume.CUBIC_METERS, SensorDeviceClass.WATER),
         NdlgoSensor(c, entry, "last_bill_cost", "eur", "EUR", SensorDeviceClass.MONETARY),
         NdlgoDailySensor(c, entry),
+        NdlgoAmrSensor(c, entry),
     ])
 
 
@@ -32,7 +33,8 @@ class _Base(CoordinatorEntity, SensorEntity):
 
     @property
     def _last(self):
-        return self.coordinator.data[-1] if self.coordinator.data else None
+        p = self.coordinator.data.periods if self.coordinator.data else None
+        return p[-1] if p else None
 
     @property
     def extra_state_attributes(self):
@@ -66,3 +68,36 @@ class NdlgoDailySensor(_Base):
         p = self._last
         days = p and (p.end - p.start).days
         return round(p.m3 / days * 1000) if days else None
+
+
+class NdlgoAmrSensor(_Base):
+    """Latest smart-meter (AMR) value; unavailable until the meter has AMR data."""
+    _attr_native_unit_of_measurement = UnitOfVolume.CUBIC_METERS
+    _attr_device_class = SensorDeviceClass.WATER
+    _attr_state_class = SensorStateClass.TOTAL_INCREASING
+
+    def __init__(self, coordinator, entry):
+        super().__init__(coordinator, entry, "smart_meter_reading")
+
+    @property
+    def available(self):
+        return super().available and bool(self.coordinator.data and self.coordinator.data.amr)
+
+    @property
+    def _amr(self):
+        return self.coordinator.data.amr if self.coordinator.data else []
+
+    @property
+    def native_value(self):
+        a = self._amr
+        if not a:
+            return None
+        if a[-1].cumulative:
+            return a[-1].value
+        return round(sum(r.value for r in a), 3)
+
+    @property
+    def extra_state_attributes(self):
+        a = self._amr
+        return a and {"last_reading_time": a[-1].time.isoformat(), "readings": len(a),
+                      "kind": "meter_index" if a[-1].cumulative else "summed_interval_usage"}

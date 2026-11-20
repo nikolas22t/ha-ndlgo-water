@@ -7,3 +7,4 @@ TZ_NAME = "Europe/Nicosia"
 UPDATE_INTERVAL = timedelta(hours=12)
 STAT_CONSUMPTION = f"{DOMAIN}:water_consumption"
 STAT_COST = f"{DOMAIN}:water_cost"
+STAT_AMR = f"{DOMAIN}:water_amr_consumption"

@@ -1,13 +1,17 @@
 {
   "domain": "ndlgo",
   "name": "NDLGO Water (Nicosia)",
-  "codeowners": ["@nikolas22t"],
+  "codeowners": [
+    "@nikolas22t"
+  ],
   "config_flow": true,
-  "dependencies": ["recorder"],
+  "dependencies": [
+    "recorder"
+  ],
   "documentation": "https://github.com/nikolas22t/ha-ndlgo-water",
   "integration_type": "service",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/nikolas22t/ha-ndlgo-water/issues",
   "requirements": [],
-  "version": "1.0.1"
+  "version": "1.1.0"
 }

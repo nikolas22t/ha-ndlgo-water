@@ -4,11 +4,16 @@
       "user": {
         "title": "NDLGO water portal",
         "description": "Log in with your online.ndlgo.org.cy portal account.",
-        "data": {"username": "Username", "password": "Password"}
+        "data": {
+          "username": "Username",
+          "password": "Password"
+        }
       },
       "reauth_confirm": {
         "title": "Re-authenticate NDLGO",
-        "data": {"password": "Password"}
+        "data": {
+          "password": "Password"
+        }
       }
     },
     "error": {
@@ -22,9 +27,18 @@
   },
   "entity": {
     "sensor": {
-      "last_bill_volume": {"name": "Last bill volume"},
-      "last_bill_cost": {"name": "Last bill cost"},
-      "last_bill_daily": {"name": "Last bill daily average"}
+      "last_bill_volume": {
+        "name": "Last bill volume"
+      },
+      "last_bill_cost": {
+        "name": "Last bill cost"
+      },
+      "last_bill_daily": {
+        "name": "Last bill daily average"
+      },
+      "smart_meter_reading": {
+        "name": "Smart meter reading"
+      }
     }
   }
 }
