@@ -1,0 +1,30 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "NDLGO water portal",
+        "description": "Log in with your online.ndlgo.org.cy portal account.",
+        "data": {"username": "Username", "password": "Password"}
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate NDLGO",
+        "data": {"password": "Password"}
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid username or password.",
+      "cannot_connect": "Could not reach the NDLGO portal."
+    },
+    "abort": {
+      "already_configured": "This account is already configured.",
+      "reauth_successful": "Re-authentication successful."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "last_bill_volume": {"name": "Last bill volume"},
+      "last_bill_cost": {"name": "Last bill cost"},
+      "last_bill_daily": {"name": "Last bill daily average"}
+    }
+  }
+}
